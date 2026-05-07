@@ -2,13 +2,18 @@
 
 **An educational Python simulator for baseball pitch aerodynamics, spin, drag, Magnus force, and pitch movement.**
 
-`pitchphys` is a point-mass trajectory simulator that lets you experiment with the dominant first-order physics of a pitched baseball: gravity, drag, and the Magnus effect. Force terms are toggleable so you can see exactly how each one shapes the trajectory.
+`pitchphys` is a point-mass trajectory simulator that lets you experiment with the dominant first-order physics of a pitched baseball: gravity, drag, and the Magnus effect. Force terms are toggleable so you can see exactly how each one shapes the trajectory. v0.2 adds an interactive 3D Plotly viz layer, a 5-page Streamlit app, and three tutorial notebooks.
+
+## Install matrix
+
+| Goal | Install command |
+| --- | --- |
+| Core engine only (numpy + scipy) | `pip install pitchphys` |
+| Engine + 2D matplotlib plots | `pip install pitchphys[viz]` |
+| Engine + 2D + 3D Plotly + Streamlit app | `pip install pitchphys[app]` |
+| Local development (everything + tests) | `pip install -e ".[dev,viz,app]"` |
 
 ## Quickstart
-
-```bash
-pip install -e ".[dev,viz]"
-```
 
 ```python
 from pitchphys import simulate
@@ -17,6 +22,32 @@ from pitchphys.presets import four_seam
 traj = simulate(four_seam(speed_mph=95, spin_rpm=2400))
 print(traj.break_metrics())
 ```
+
+## Interactive app
+
+After `pip install pitchphys[app]`:
+
+```bash
+pitchphys-app                 # opens http://localhost:8501
+# or, from a source checkout:
+streamlit run app/streamlit_app.py
+```
+
+The app has five pages:
+
+1. **Pitch Playground** — every slider, animated 3D, full break-metrics row.
+2. **Magnus Explorer** — `v`, `ω`, and `ω × v̂` vectors at release.
+3. **Fastball vs Curveball** — two pitches side by side.
+4. **Active Spin / Gyro** — sweep active fraction at fixed spin rate.
+5. **Drag + Environment** — gravity / drag / Magnus toggles, weather, wind.
+
+## Notebooks
+
+Three tutorial notebooks under `notebooks/` walk through the core physics:
+
+- `03_magnus_effect_fastball_curveball.ipynb` — why a fastball "rises"
+- `05_active_spin_vs_gyro_spin.ipynb` — spin rate is not movement (SPEC §4.4)
+- `09_build_your_own_pitch.ipynb` — guided tour of `from_mph_rpm_axis(...)`
 
 Approximate output for a high-spin 95 mph four-seamer at sea level (default `LyuAeroModel` + 1.5 s spin-decay τ):
 
@@ -46,7 +77,9 @@ find .venv -name "*.pth" -exec chflags nohidden {} \;
 
 The package's tests don't need this — `pytest`'s `pythonpath = ["src"]` config in `pyproject.toml` works around it.
 
-## What's modeled in v0.1.5
+## What's modeled (v0.2)
+
+**Engine (v0.1.5)**
 
 - Gravity, drag, and Magnus lift on a point mass
 - Active spin vs gyro spin (the part of the spin that actually moves the ball)
@@ -56,7 +89,14 @@ The package's tests don't need this — `pytest`'s `pythonpath = ["src"]` config
 - Pluggable aerodynamic models (`LyuAeroModel`, `NathanLiftModel`, `SimpleMagnusModel`, `ConstantAeroModel`, `UserDefinedAeroModel`)
 - Pedagogical pitch presets (four-seam, curveball, slider, sinker, changeup)
 - Break metrics in baseball-friendly units (inches, mph, feet) over an SI core
-- 2D Matplotlib helpers (side view, catcher view, top view, pitch comparison)
+
+**Interactive layer (v0.2)**
+
+- 2D Matplotlib helpers (side / catcher / top / compare-pitches)
+- 3D Plotly helpers (`trajectory_3d`, `compare_pitches_3d`, `add_spin_axis_arrow`, `add_force_vectors`)
+- Animated ball flight (`animate_pitch`, `animate_pitches`) with play/pause/scrub
+- 5-page Streamlit app launchable via `pitchphys-app`
+- 3 tutorial notebooks under `notebooks/`
 
 ## Physics provenance
 
@@ -68,8 +108,6 @@ The default aerodynamic model is calibrated against published baseball wind-tunn
 
 ## What's deferred
 
-- 3D Plotly visualizations and animation (v0.2)
-- Streamlit educational app (v0.2)
 - Statcast import and seam-shifted-wake toy model (v0.3)
 - Numba / JAX backends, parameter fitting (v0.4+)
 
