@@ -1,0 +1,35 @@
+# Python build / runtime artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Virtualenvs
+.venv/
+venv/
+.env
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Tooling caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Claude / agent state
+.claude/
+
+# Copyrighted reference papers (not redistributable)
+references/
+
+# Generated example outputs (regenerable from examples/*.py)
+examples/*.png

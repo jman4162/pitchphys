@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pitchphys"
+version = "0.1.0"
+description = "Educational Python simulator for baseball pitch aerodynamics, spin, drag, Magnus force, and pitch movement."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [{ name = "pitchphys contributors" }]
+keywords = ["baseball", "physics", "magnus", "aerodynamics", "education", "simulation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.12",
+]
+
+[project.optional-dependencies]
+viz = ["matplotlib>=3.8"]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pitchphys"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "SIM", "RUF", "NPY"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Physics symbols (Re, S, Cd, Cl, F) and clamped indexers keep their
+# textbook-standard uppercase names; N803/N806 don't apply to physics code.
+"src/pitchphys/aero/*.py" = ["N803", "N806"]
+"src/pitchphys/core/forces.py" = ["N803", "N806"]
+"src/pitchphys/core/simulate.py" = ["N806"]
+"tests/test_forces.py" = ["N806"]
+"tests/test_aero_models.py" = ["N802", "N803", "N806"]
+"tests/test_aero_nathan.py" = ["N802", "N806", "SIM300"]
+"tests/test_aero_lyu.py" = ["N802", "N806"]
+"tests/test_spin_decay.py" = ["N806"]
+"tests/test_dataclasses.py" = ["B017"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["scipy.*", "matplotlib.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q --strict-markers"
