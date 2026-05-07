@@ -20,6 +20,10 @@ from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
 OUT_DIR = Path(__file__).resolve().parents[1] / "notebooks"
 OUT_DIR.mkdir(exist_ok=True)
 
+# GitHub coordinates used to construct Colab links.
+REPO_SLUG = "jman4162/pitchphys"
+BRANCH = "main"
+
 
 def md(text: str):
     return new_markdown_cell(text)
@@ -27,6 +31,36 @@ def md(text: str):
 
 def code(text: str):
     return new_code_cell(text)
+
+
+def _colab_badge(notebook_name: str) -> str:
+    """Markdown for an 'Open in Colab' badge linking to the notebook on GitHub."""
+    url = (
+        f"https://colab.research.google.com/github/{REPO_SLUG}/blob/{BRANCH}/"
+        f"notebooks/{notebook_name}"
+    )
+    return f"[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)]({url})"
+
+
+def with_colab_badge(intro_md: str, notebook_name: str) -> str:
+    """Insert the Colab badge right after the H1 title in an intro cell."""
+    badge = _colab_badge(notebook_name)
+    if "\n\n" in intro_md:
+        title, body = intro_md.split("\n\n", 1)
+        return f"{title}\n\n{badge}\n\n{body}"
+    return f"{badge}\n\n{intro_md}"
+
+
+COLAB_INSTALL_CODE = (
+    "# Auto-install pitchphys when running on Colab.\n"
+    "import sys\n"
+    "\n"
+    'if "google.colab" in sys.modules:\n'
+    f'    !pip install -q "pitchphys[viz] @ git+https://github.com/{REPO_SLUG}.git"\n'
+    "\n"
+    "import pitchphys\n"
+    'print(f"pitchphys {pitchphys.__version__}")'
+)
 
 
 # ---------------------------------------------------------------------------
@@ -105,7 +139,8 @@ nb03 = new_notebook(
         md("## 5. Force magnitudes over time"),
         code(
             "fig, axes = plt.subplots(1, 2, figsize=(11, 4), sharey=True)\n"
-            "for ax, (name, traj) in zip(axes, [('Fastball', traj_fb), ('Curveball', traj_cb)]):\n"
+            "pairs = [('Fastball', traj_fb), ('Curveball', traj_cb)]\n"
+            "for ax, (name, traj) in zip(axes, pairs, strict=False):\n"
             "    for fname, color in [('gravity', 'tab:gray'), ('drag', 'tab:orange'), ('magnus', 'tab:blue')]:\n"
             "        mag = np.linalg.norm(traj.forces[fname], axis=1)\n"
             "        ax.plot(traj.time, mag, label=fname, color=color)\n"
@@ -347,6 +382,15 @@ nb09 = new_notebook(
 
 
 def write(notebook, name: str):
+    """Inject Colab badge + install cell, then save the notebook."""
+    # Cell 0 is the title/intro markdown; rewrite it to include the Colab
+    # badge under the H1.
+    first_cell = notebook.cells[0]
+    if first_cell.cell_type == "markdown":
+        first_cell.source = with_colab_badge(first_cell.source, name)
+    # Insert the auto-install code cell at index 1 (right after the intro).
+    notebook.cells.insert(1, new_code_cell(COLAB_INSTALL_CODE))
+
     path = OUT_DIR / name
     nbf.write(notebook, path)
     print(f"wrote {path}")

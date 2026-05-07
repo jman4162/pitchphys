@@ -1,5 +1,7 @@
 # pitchphys
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pitchphys.streamlit.app)
+
 **An educational Python simulator for baseball pitch aerodynamics, spin, drag, Magnus force, and pitch movement.**
 
 `pitchphys` is a point-mass trajectory simulator that lets you experiment with the dominant first-order physics of a pitched baseball: gravity, drag, and the Magnus effect. Force terms are toggleable so you can see exactly how each one shapes the trajectory. v0.2 adds an interactive 3D Plotly viz layer, a 5-page Streamlit app, and three tutorial notebooks.
@@ -41,13 +43,28 @@ The app has five pages:
 4. **Active Spin / Gyro** — sweep active fraction at fixed spin rate.
 5. **Drag + Environment** — gravity / drag / Magnus toggles, weather, wind.
 
+## Deploy your own copy to Streamlit Cloud
+
+The repo is preconfigured for one-click deployment:
+
+1. Fork or clone this repo to your GitHub account.
+2. Sign in at https://share.streamlit.io with your GitHub account.
+3. Click **Create app** → pick this repo, branch `main`, and main file path `app/streamlit_app.py`.
+4. Click **Deploy**. Build takes ~3 minutes the first time (plotly + scipy wheels).
+
+Streamlit Cloud reads `requirements.txt` (single line `.[app]` — installs the package with the `[app]` extra) and `runtime.txt` (Python 3.12). All app pages, 3D Plotly viz, and physics models run without further configuration.
+
 ## Notebooks
 
-Three tutorial notebooks under `notebooks/` walk through the core physics:
+Three tutorial notebooks under `notebooks/` walk through the core physics. Click the badge to open in Google Colab — each notebook auto-installs `pitchphys` in the Colab session, no setup needed.
 
-- `03_magnus_effect_fastball_curveball.ipynb` — why a fastball "rises"
-- `05_active_spin_vs_gyro_spin.ipynb` — spin rate is not movement (SPEC §4.4)
-- `09_build_your_own_pitch.ipynb` — guided tour of `from_mph_rpm_axis(...)`
+| Notebook | Topic | Open in Colab |
+|---|---|---|
+| `03_magnus_effect_fastball_curveball.ipynb` | Why a fastball "rises" (SPEC §4.1) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jman4162/pitchphys/blob/main/notebooks/03_magnus_effect_fastball_curveball.ipynb) |
+| `05_active_spin_vs_gyro_spin.ipynb` | Spin rate is not movement (SPEC §4.4) | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jman4162/pitchphys/blob/main/notebooks/05_active_spin_vs_gyro_spin.ipynb) |
+| `09_build_your_own_pitch.ipynb` | Guided tour of `from_mph_rpm_axis(...)` | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jman4162/pitchphys/blob/main/notebooks/09_build_your_own_pitch.ipynb) |
+
+Note: Colab currently runs Python 3.11; if a future Colab downgrade breaks the install, run the notebooks locally via `jupyter lab notebooks/`.
 
 Approximate output for a high-spin 95 mph four-seamer at sea level (default `LyuAeroModel` + 1.5 s spin-decay τ):
 
