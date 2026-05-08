@@ -29,7 +29,7 @@ dependencies = [
 [project.optional-dependencies]
 viz = ["matplotlib>=3.8", "plotly>=5.20"]
 app = ["pitchphys[viz]", "streamlit>=1.30"]
-dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10"]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10", "playwright>=1.40"]
 
 [project.scripts]
 pitchphys-app = "pitchphys.app_launcher:main"

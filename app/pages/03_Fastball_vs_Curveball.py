@@ -9,7 +9,11 @@ import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from utils import cached_simulate
+from utils import (
+    cached_simulate,
+    render_download_buttons,
+    render_strike_zone_chip,
+)
 
 from pitchphys import presets
 from pitchphys.core.environment import Environment
@@ -109,6 +113,15 @@ st.markdown("### 3D comparison")
 fig3d = compare_pitches_3d([traj_a, traj_b], labels=["Pitch A", "Pitch B"])
 st.plotly_chart(fig3d, use_container_width=True)
 
+# ----- Strike chips per pitch -----
+chip_col_a, chip_col_b = st.columns(2)
+with chip_col_a:
+    st.markdown("**Pitch A**")
+    render_strike_zone_chip(traj_a)
+with chip_col_b:
+    st.markdown("**Pitch B**")
+    render_strike_zone_chip(traj_b)
+
 st.markdown("### 2D views")
 view_col_a, view_col_b = st.columns(2)
 with view_col_a:
@@ -149,3 +162,13 @@ metrics_col[2].metric(
     "Drop",
     f"{traj_a.total_drop_in - traj_b.total_drop_in:+.1f} in",
 )
+
+# ----- Per-pitch download buttons -----
+st.markdown("### Save these pitches")
+dl_col_a, dl_col_b = st.columns(2)
+with dl_col_a:
+    st.markdown("**Pitch A**")
+    render_download_buttons(traj_a, fig3d=None, prefix="fbcv_a_")
+with dl_col_b:
+    st.markdown("**Pitch B**")
+    render_download_buttons(traj_b, fig3d=None, prefix="fbcv_b_")

@@ -2,6 +2,8 @@
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pitchphys.streamlit.app)
 
+![pitchphys demo](docs/demo.gif)
+
 **An educational Python simulator for baseball pitch aerodynamics, spin, drag, Magnus force, and pitch movement.**
 
 `pitchphys` is a point-mass trajectory simulator that lets you experiment with the dominant first-order physics of a pitched baseball: gravity, drag, and the Magnus effect. Force terms are toggleable so you can see exactly how each one shapes the trajectory. v0.2 adds an interactive 3D Plotly viz layer, a 5-page Streamlit app, and three tutorial notebooks.

@@ -3,11 +3,13 @@
 Composes every knob the engine exposes: pitch sliders, model selector,
 forces toggles, environment, spin decay, animation. Renders the full
 3D scene with spin-axis arrow + force-vector overlays plus a 2x2
-matplotlib grid below.
+matplotlib grid below. Adds a strike-zone chip, download buttons, and a
+Statcast comparison expander for credibility-checking the simulation.
 """
 
 from __future__ import annotations
 
+import math
 import sys
 from pathlib import Path
 
@@ -28,6 +30,8 @@ from utils import (
     forces_selector,
     pitch_release_sidebar,
     render_break_metrics,
+    render_download_buttons,
+    render_strike_zone_chip,
     spin_decay_sidebar,
 )
 
@@ -47,7 +51,8 @@ st.title("Pitch Playground")
 st.markdown(
     "Drag any slider — every plot below updates. Toggle the animation to "
     "watch the ball travel, or untoggle individual forces to see how each "
-    "one shapes the path."
+    "one shapes the path. **The URL captures every slider value, so you can "
+    "share a link to your exact pitch.**"
 )
 
 pitch = pitch_release_sidebar(prefix="pp_")
@@ -76,8 +81,75 @@ else:
 fig3d.update_layout(height=600)
 st.plotly_chart(fig3d, use_container_width=True)
 
+# ----- Strike chip -----
+render_strike_zone_chip(traj)
+
 # ----- Break metrics row -----
 render_break_metrics(traj)
+
+# ----- Download buttons -----
+st.markdown("##### Save this pitch")
+render_download_buttons(traj, fig3d=fig3d, prefix="pp_")
+
+# ----- Statcast comparison expander -----
+with st.expander("Compare to a real pitch (Statcast / Baseball Savant)", expanded=False):
+    st.markdown(
+        "Paste values from Baseball Savant for any pitch (e.g., a Spencer "
+        "Strider fastball: 98 mph, 2400 rpm, 1:00 tilt, IVB +19 in, "
+        "horizontal break -3 in) to see how close the simulation lands."
+    )
+    obs_col, sim_col, delta_col = st.columns(3)
+
+    obs_col.markdown("**Observed**")
+    obs_speed = obs_col.number_input(
+        "Release speed (mph)",
+        min_value=40.0,
+        max_value=110.0,
+        value=95.0,
+        step=0.1,
+        key="obs_speed",
+    )
+    obs_spin = obs_col.number_input(
+        "Spin rate (rpm)",
+        min_value=500.0,
+        max_value=4000.0,
+        value=2400.0,
+        step=10.0,
+        key="obs_spin",
+    )
+    obs_tilt = obs_col.number_input(
+        "Tilt (clock hours)",
+        min_value=0.0,
+        max_value=12.0,
+        value=12.0,
+        step=0.25,
+        key="obs_tilt",
+    )
+    obs_ivb = obs_col.number_input("IVB (in)", value=18.0, step=0.5, key="obs_ivb")
+    obs_hb = obs_col.number_input("Horizontal break (in)", value=0.0, step=0.5, key="obs_hb")
+
+    sim_spin_rpm = traj.pitch.spin_rate_rad_s * 60.0 / (2.0 * math.pi)
+    sim_tilt = float(traj.pitch.metadata.get("tilt_clock", 12.0))
+    sim_col.markdown("**Simulated**")
+    sim_col.metric("Release speed", f"{traj.release_speed_mph:.1f} mph")
+    sim_col.metric("Spin rate", f"{sim_spin_rpm:.0f} rpm")
+    sim_col.metric("Tilt", f"{sim_tilt:.2f} hrs")
+    sim_col.metric("IVB", f"{traj.induced_vertical_break_in:+.1f} in")
+    sim_col.metric("Horiz break", f"{traj.horizontal_break_in:+.1f} in")
+
+    delta_col.markdown("**Δ (sim − obs)**")
+    delta_col.metric("Speed", f"{traj.release_speed_mph - obs_speed:+.1f} mph")
+    delta_col.metric("Spin rate", f"{sim_spin_rpm - obs_spin:+.0f} rpm")
+    delta_col.metric("Tilt", f"{sim_tilt - obs_tilt:+.2f} hrs")
+    delta_col.metric("IVB", f"{traj.induced_vertical_break_in - obs_ivb:+.1f} in")
+    delta_col.metric("Horiz break", f"{traj.horizontal_break_in - obs_hb:+.1f} in")
+
+    st.caption(
+        "If the Δ column is small (≤ 2 in. on IVB / horizontal break, "
+        "≤ 1 mph on speed), the default `LyuAeroModel` is reproducing "
+        "the real pitch's break well. Larger gaps usually mean active "
+        "spin % or seam-shifted-wake effects matter for that pitch."
+    )
 
 # ----- 2D grid -----
 st.markdown("### 2D views and force decomposition")

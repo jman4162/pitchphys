@@ -16,7 +16,7 @@ import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from utils import cached_simulate
+from utils import cached_simulate, get_canonical_pitch, render_strike_zone_chip
 
 from pitchphys.core.environment import Environment
 from pitchphys.core.pitch import PitchRelease
@@ -29,14 +29,22 @@ st.markdown(
     "drag + Magnus). See how each force adds to the trajectory."
 )
 
+canonical = get_canonical_pitch()
 # ----- Pitch -----
 with st.sidebar:
     st.header("Pitch")
-    speed_mph = st.slider("Speed (mph)", 60.0, 105.0, 95.0, 0.5)
-    spin_rpm = st.slider("Spin rate (rpm)", 1000.0, 3500.0, 2400.0, 50.0)
-    tilt_clock = st.slider("Tilt (clock)", 0.0, 12.0, 12.0, 0.25)
-    active = st.slider("Active spin fraction", 0.0, 1.0, 0.95, 0.05)
-    hand = st.radio("Throwing hand", ("R", "L"), horizontal=True)
+    speed_mph = st.slider("Speed (mph)", 60.0, 105.0, float(canonical["speed_mph"]), 0.5)
+    spin_rpm = st.slider("Spin rate (rpm)", 1000.0, 3500.0, float(canonical["spin_rpm"]), 50.0)
+    tilt_clock = st.slider("Tilt (clock)", 0.0, 12.0, float(canonical["tilt_clock"]), 0.25)
+    active = st.slider(
+        "Active spin fraction", 0.0, 1.0, float(canonical["active_spin_fraction"]), 0.05
+    )
+    hand = st.radio(
+        "Throwing hand",
+        ("R", "L"),
+        index=0 if canonical["throwing_hand"] == "R" else 1,
+        horizontal=True,
+    )
 
 # ----- Environment -----
 with st.sidebar:
@@ -88,6 +96,10 @@ st.markdown(f"**Air density:** {env.air_density_kg_m3:.4f} kg/m³")
 
 fig3d = compare_pitches_3d(trajs, labels=labels)
 st.plotly_chart(fig3d, use_container_width=True)
+
+# ----- Strike chip for the full-physics scenario (the "real" pitch) -----
+st.markdown("**Strike call (full-physics scenario):**")
+render_strike_zone_chip(trajs[-1])
 
 # ----- Bar charts -----
 st.markdown("### How each force changes plate speed and break")

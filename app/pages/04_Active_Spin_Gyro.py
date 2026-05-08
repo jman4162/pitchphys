@@ -18,7 +18,7 @@ import streamlit as st
 # console script (where app/ is bundled into pitchphys/_app/).
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from utils import cached_simulate
+from utils import cached_simulate, get_canonical_pitch
 
 from pitchphys.core.environment import Environment
 from pitchphys.core.pitch import PitchRelease
@@ -32,20 +32,28 @@ st.markdown(
     "break (SPEC §4.4)."
 )
 
+canonical = get_canonical_pitch()
 with st.sidebar:
     st.header("Pitch")
-    speed_mph = st.slider("Speed (mph)", 70.0, 105.0, 92.0, 0.5)
-    spin_rpm = st.slider("Total spin rate (rpm)", 1500.0, 3500.0, 2500.0, 50.0)
+    speed_mph = st.slider("Speed (mph)", 70.0, 105.0, float(canonical["speed_mph"]), 0.5)
+    spin_rpm = st.slider(
+        "Total spin rate (rpm)", 1500.0, 3500.0, float(canonical["spin_rpm"]), 50.0
+    )
     tilt_clock = st.slider(
         "Tilt (clock face)",
         0.0,
         12.0,
-        12.0,
+        float(canonical["tilt_clock"]),
         0.25,
         help="12:00 = backspin axis. Sweep is over active fraction at this tilt.",
     )
-    throwing_hand = st.radio("Throwing hand", ("R", "L"), horizontal=True)
-    n_samples = st.slider("Samples in sweep", 5, 41, 21, 2)
+    throwing_hand = st.radio(
+        "Throwing hand",
+        ("R", "L"),
+        index=0 if canonical["throwing_hand"] == "R" else 1,
+        horizontal=True,
+    )
+    n_samples = st.slider("Samples in sweep", 5, 41, 11, 2)
 
 env = Environment.sea_level()
 fractions = np.linspace(0.0, 1.0, n_samples)

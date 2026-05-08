@@ -16,7 +16,7 @@ import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from utils import cached_simulate
+from utils import cached_simulate, get_canonical_pitch
 
 from pitchphys.coordinates import decompose_omega
 from pitchphys.core.environment import Environment
@@ -36,13 +36,14 @@ st.markdown(
     """
 )
 
+canonical = get_canonical_pitch()
 with st.sidebar:
     st.header("Pitch")
     tilt_clock = st.slider(
         "Tilt (clock face)",
         0.0,
         12.0,
-        12.0,
+        float(canonical["tilt_clock"]),
         0.25,
         help="12:00 = backspin axis (+x). See SPEC §4.5 for the full convention.",
     )
@@ -50,13 +51,18 @@ with st.sidebar:
         "Active spin fraction",
         0.0,
         1.0,
-        0.95,
+        float(canonical["active_spin_fraction"]),
         0.05,
         help="Fraction of spin perpendicular to velocity.",
     )
-    throwing_hand = st.radio("Throwing hand", ("R", "L"), horizontal=True)
-    speed_mph = st.slider("Speed (mph)", 70.0, 105.0, 95.0, 0.5)
-    spin_rpm = st.slider("Spin rate (rpm)", 1500.0, 3500.0, 2400.0, 50.0)
+    throwing_hand = st.radio(
+        "Throwing hand",
+        ("R", "L"),
+        index=0 if canonical["throwing_hand"] == "R" else 1,
+        horizontal=True,
+    )
+    speed_mph = st.slider("Speed (mph)", 70.0, 105.0, float(canonical["speed_mph"]), 0.5)
+    spin_rpm = st.slider("Spin rate (rpm)", 1500.0, 3500.0, float(canonical["spin_rpm"]), 50.0)
 
 env = Environment.sea_level()
 pitch = PitchRelease.from_mph_rpm_axis(
