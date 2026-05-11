@@ -30,6 +30,11 @@ dependencies = [
 viz = ["matplotlib>=3.8", "plotly>=5.20"]
 app = ["pitchphys[viz]", "streamlit>=1.30"]
 dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10", "playwright>=1.40"]
+docs = [
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.24",
+    "mkdocs-jupyter>=0.25",
+]
 
 [project.scripts]
 pitchphys-app = "pitchphys.app_launcher:main"

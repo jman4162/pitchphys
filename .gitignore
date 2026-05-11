@@ -33,3 +33,8 @@ references/
 
 # Generated example outputs (regenerable from examples/*.py)
 examples/*.png
+
+# Docs build artifacts (mkdocs)
+site/
+.cache/
+docs/notebooks/  # populated by scripts/docs_hooks.py from notebooks/ at build time

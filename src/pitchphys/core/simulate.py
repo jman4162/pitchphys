@@ -75,7 +75,8 @@ def simulate(
             Defaults to all three. An empty list is allowed (free flight).
         plate_distance_m: Y-coordinate where the integration terminates.
         method: ``"RK45"`` (default) or ``"DOP853"``.
-        rtol, atol: Solver tolerances.
+        rtol: Solver relative tolerance.
+        atol: Solver absolute tolerance.
         max_t: Maximum integration time in seconds.
         spin_decay_tau_s: Exponential time constant for spin decay,
             ``omega(t) = omega_0 * exp(-t / tau)``. Default ``1.5 s`` is an

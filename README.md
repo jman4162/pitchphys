@@ -4,6 +4,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/pitchphys.svg)](https://pypi.org/project/pitchphys/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://github.com/jman4162/pitchphys/actions/workflows/test.yml/badge.svg)](https://github.com/jman4162/pitchphys/actions/workflows/test.yml)
+[![Docs](https://img.shields.io/badge/docs-mkdocs--material-blue?logo=materialformkdocs)](https://jman4162.github.io/pitchphys/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pitchphys.streamlit.app)
 
@@ -122,42 +123,28 @@ The package's tests don't need this — `pytest`'s `pythonpath = ["src"]` config
 - 5-page Streamlit app launchable via `pitchphys-app`
 - 3 tutorial notebooks under `notebooks/`
 
-## Physics provenance
+## Documentation
 
-The default aerodynamic model is calibrated against published baseball wind-tunnel and motion-capture data:
+Full documentation lives at **[https://jman4162.github.io/pitchphys/](https://jman4162.github.io/pitchphys/)**:
 
-- **`LyuAeroModel`** (default): drag crisis `Cd(Re, S)` and seam-averaged lift `Cl(S)` from Lyu, Smith, Elliott & Kensrud (2022), "The dependence of baseball lift and drag on spin," *Proc IMechE Part P*. PDF in `references/LyuDragLiftSpin.pdf`.
-- **`NathanLiftModel`**: bilinear `Cl(S) = 1.5·S` for `S<0.1` and `0.09 + 0.6·S` for `S≥0.1` from Sawicki, Hubbard & Stronge (2003), "How to hit home runs," *Am. J. Phys.* 71:1152–1162. Validated by Nathan (2008), *Am. J. Phys.* 76:119–124 (PDF: `references/ajpfeb08.pdf`). The four-pitch deflection regression in Nathan's Table I is checked in `tests/test_aero_nathan.py`.
-- **`SimpleMagnusModel`**: pedagogical `Cl = min(a·S, cl_max)` (Watts & Ferrer 1987 baseline). Kept as a transparent comparison.
+- [Physics primer](https://jman4162.github.io/pitchphys/user-guide/physics-primer/) — gravity, drag, Magnus, active vs gyro spin.
+- [Coordinates](https://jman4162.github.io/pitchphys/user-guide/coordinates/) — clock-tilt convention and how to read it.
+- [Aerodynamic models](https://jman4162.github.io/pitchphys/user-guide/aero-models/) — `LyuAeroModel`, `NathanLiftModel`, etc., with provenance.
+- [Environment & weather](https://jman4162.github.io/pitchphys/user-guide/environment/) — `from_weather`, Coors, humidity, wind.
+- [Pitch presets](https://jman4162.github.io/pitchphys/user-guide/presets/) — what each archetype is and isn't.
+- [API reference](https://jman4162.github.io/pitchphys/api/) — every public function and class, auto-generated from docstrings.
+- [Tutorials](https://jman4162.github.io/pitchphys/tutorials/) — three notebooks rendered inline, also openable in Colab.
 
 ## What's deferred
 
 - Statcast import and seam-shifted-wake toy model (v0.3)
 - Numba / JAX backends, parameter fitting (v0.4+)
 
-See `SPEC_DRAFT.md` for the full design rationale and roadmap.
+See [`SPEC_DRAFT.md`](SPEC_DRAFT.md) for the full design rationale and roadmap.
 
 ## Important caveat
 
 `pitchphys` is an educational point-mass trajectory simulator. It uses empirical aerodynamic models and simplified force terms. Real baseball flight depends on ball variation, seam geometry, atmospheric conditions, release conditions, spin axis, active spin, and non-Magnus effects such as seam-shifted wake. Use it to learn, explore, and prototype — not as a definitive pitch-design engine.
-
-## Coordinate conventions (catcher view)
-
-```
-        12 (backspin)
-         |
-   9 ----+---- 3   (clock-tilt notation; degrees clockwise from 12)
-         |
-         6 (topspin)
-```
-
-For a right-handed pitcher:
-- 12:00 → spin axis along **+x** (catcher's right) → upward Magnus on a +y-traveling pitch
-- 6:00 → axis along **-x** (topspin)
-- 3:00 → axis along **-z** (sidespin)
-- 9:00 → axis along **+z** (sidespin)
-
-`throwing_hand="L"` mirrors clock tilt across the 12-6 axis. World-frame axes: `x` = catcher's right, `y` = toward home plate, `z` = up.
 
 ## License
 
