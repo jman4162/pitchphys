@@ -1,5 +1,10 @@
 # pitchphys
 
+[![PyPI version](https://img.shields.io/pypi/v/pitchphys.svg)](https://pypi.org/project/pitchphys/)
+[![Python versions](https://img.shields.io/pypi/pyversions/pitchphys.svg)](https://pypi.org/project/pitchphys/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/jman4162/pitchphys/actions/workflows/test.yml/badge.svg)](https://github.com/jman4162/pitchphys/actions/workflows/test.yml)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pitchphys.streamlit.app)
 
 ![pitchphys demo](docs/demo.gif)
