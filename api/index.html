@@ -1,0 +1,5611 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Educational Python simulator for baseball pitch aerodynamics, spin, drag, Magnus force, and pitch movement.">
+      
+      
+      
+        <link rel="canonical" href="https://jman4162.github.io/pitchphys/api/">
+      
+      
+        <link rel="prev" href="../notebooks/09_build_your_own_pitch/">
+      
+      
+        <link rel="next" href="../contributing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>API reference - pitchphys</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="pitchphys" class="md-header__button md-logo" aria-label="pitchphys" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pitchphys
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jman4162/pitchphys" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jman4162/pitchphys
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../user-guide/physics-primer/" class="md-tabs__link">
+          
+  
+  
+  User guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../tutorials/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="pitchphys" class="md-nav__button md-logo" aria-label="pitchphys" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    pitchphys
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jman4162/pitchphys" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jman4162/pitchphys
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/physics-primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics primer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/coordinates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordinates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/aero-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aerodynamic models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment & weather
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/presets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pitch presets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../notebooks/03_magnus_effect_fastball_curveball/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 — Magnus effect: fastball vs curveball
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../notebooks/05_active_spin_vs_gyro_spin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 — Active spin vs gyro spin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../notebooks/09_build_your_own_pitch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 — Build your own pitch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#top-level-entry-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level entry points
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Top-level entry points">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="simulate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate.simulate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate.simulate_many" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate_many
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate_many" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate_many
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PitchRelease
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PitchRelease">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease.from_mph_rpm_axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_mph_rpm_axis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease.initial_velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        initial_velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease.omega_vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        omega_vec
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Baseball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Baseball
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Baseball">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Baseball.area_m2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        area_m2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment.sea_level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sea_level
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment.coors_field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        coors_field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment.from_weather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_weather
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TrajectoryResult
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TrajectoryResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.total_drop_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        total_drop_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.horizontal_break_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        horizontal_break_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.induced_vertical_break_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        induced_vertical_break_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.magnus_break_x_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        magnus_break_x_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.non_magnus_break_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        non_magnus_break_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.plate_location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plate_location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.break_metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        break_metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aerodynamic-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aerodynamic models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aerodynamic models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aero
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.AeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.LyuAeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LyuAeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.NathanLiftModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NathanLiftModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.SimpleMagnusModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SimpleMagnusModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.ConstantAeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConstantAeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.UserDefinedAeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UserDefinedAeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Coordinates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.STRIKE_ZONE_TOP_FT" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIKE_ZONE_TOP_FT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.STRIKE_ZONE_BOTTOM_FT" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIKE_ZONE_BOTTOM_FT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.STRIKE_ZONE_HALF_WIDTH_FT" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIKE_ZONE_HALF_WIDTH_FT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.clock_tilt_to_axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clock_tilt_to_axis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.build_omega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        build_omega
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.decompose_omega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        decompose_omega
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Units
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Units">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        units
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.mph_to_mps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mph_to_mps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.mps_to_mph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mps_to_mph
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.rpm_to_radps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rpm_to_radps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.radps_to_rpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radps_to_rpm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.ft_to_m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ft_to_m
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.m_to_ft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        m_to_ft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.in_to_m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        in_to_m
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.m_to_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        m_to_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-2d-matplotlib" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization — 2D (Matplotlib)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization — 2D (Matplotlib)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot2d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.side_view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        side_view
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.catcher_view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        catcher_view
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.top_view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        top_view
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.compare_pitches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_pitches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.draw_force_arrows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        draw_force_arrows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-3d-plotly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization — 3D (Plotly)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization — 3D (Plotly)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot3d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.trajectory_3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        trajectory_3d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.compare_pitches_3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_pitches_3d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.add_spin_axis_arrow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add_spin_axis_arrow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.add_force_vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add_force_vectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Animation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.animation.animate_pitch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animate_pitch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.animation.animate_pitches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animate_pitches
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitch-presets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pitch presets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pitch presets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        presets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.four_seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        four_seam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.curveball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        curveball
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.slider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        slider
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.sinker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sinker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.changeup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        changeup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#top-level-entry-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level entry points
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Top-level entry points">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="simulate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate.simulate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate.simulate_many" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate_many
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.simulate_many" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simulate_many
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PitchRelease
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PitchRelease">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease.from_mph_rpm_axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_mph_rpm_axis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease.initial_velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        initial_velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.PitchRelease.omega_vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        omega_vec
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Baseball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Baseball
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Baseball">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Baseball.area_m2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        area_m2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment.sea_level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sea_level
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment.coors_field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        coors_field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.Environment.from_weather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_weather
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TrajectoryResult
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TrajectoryResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.total_drop_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        total_drop_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.horizontal_break_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        horizontal_break_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.induced_vertical_break_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        induced_vertical_break_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.magnus_break_x_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        magnus_break_x_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.non_magnus_break_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        non_magnus_break_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.plate_location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plate_location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.TrajectoryResult.break_metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        break_metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aerodynamic-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aerodynamic models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aerodynamic models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aero
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.AeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.LyuAeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LyuAeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.NathanLiftModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NathanLiftModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.SimpleMagnusModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SimpleMagnusModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.ConstantAeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConstantAeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.aero.UserDefinedAeroModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UserDefinedAeroModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Coordinates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.STRIKE_ZONE_TOP_FT" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIKE_ZONE_TOP_FT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.STRIKE_ZONE_BOTTOM_FT" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIKE_ZONE_BOTTOM_FT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.STRIKE_ZONE_HALF_WIDTH_FT" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIKE_ZONE_HALF_WIDTH_FT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.clock_tilt_to_axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clock_tilt_to_axis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.build_omega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        build_omega
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.coordinates.decompose_omega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        decompose_omega
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Units
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Units">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        units
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.mph_to_mps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mph_to_mps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.mps_to_mph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mps_to_mph
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.rpm_to_radps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rpm_to_radps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.radps_to_rpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radps_to_rpm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.ft_to_m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ft_to_m
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.m_to_ft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        m_to_ft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.in_to_m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        in_to_m
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.units.m_to_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        m_to_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-2d-matplotlib" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization — 2D (Matplotlib)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization — 2D (Matplotlib)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot2d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.side_view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        side_view
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.catcher_view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        catcher_view
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.top_view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        top_view
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.compare_pitches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_pitches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot2d.draw_force_arrows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        draw_force_arrows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-3d-plotly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization — 3D (Plotly)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization — 3D (Plotly)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot3d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.trajectory_3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        trajectory_3d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.compare_pitches_3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_pitches_3d
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.add_spin_axis_arrow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add_spin_axis_arrow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.plot3d.add_force_vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add_force_vectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Animation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.animation.animate_pitch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animate_pitch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.viz.animation.animate_pitches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animate_pitches
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitch-presets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pitch presets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pitch presets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        presets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.four_seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        four_seam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.curveball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        curveball
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.slider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        slider
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.sinker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sinker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitchphys.presets.changeup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        changeup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/jman4162/pitchphys/edit/main/docs/api.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
+<p>This page is autogenerated from the docstrings of the <code>pitchphys</code> package via <code>mkdocstrings</code>. Every public symbol you can <code>from pitchphys import ...</code> (or import from a submodule) is documented here, in source order.</p>
+<p>To see the source code for any function, use the "Source" link on the GitHub repo — <code>mkdocstrings</code> is configured to keep this page focused on signatures and prose.</p>
+<h2 id="top-level-entry-points">Top-level entry points<a class="headerlink" href="#top-level-entry-points" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h3 id="pitchphys.simulate" class="doc doc-heading">
+            <span class="doc doc-object-name doc-module-name">simulate</span>
+
+
+<a href="#pitchphys.simulate" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+        <p>Trajectory integrator built on <code>scipy.integrate.solve_ivp</code>.</p>
+<p>The plate-crossing event terminates integration at <code>y == plate_distance_m</code>.
+Per-step diagnostics (force decomposition, Re, S, Cd, Cl) are filled in via a
+second pass over the accepted timesteps so the RHS stays cheap and we don't
+need to dedupe rejected steps.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.simulate.simulate" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">simulate</span>
+
+
+<a href="#pitchphys.simulate.simulate" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">simulate</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ball</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;magnus&#39;</span><span class="p">,</span> <span class="n">forces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plate_distance_m</span><span class="o">=</span><span class="n">DEFAULT_PLATE_DISTANCE_M</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;RK45&#39;</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-08</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">max_t</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">spin_decay_tau_s</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">_baselines</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Integrate a pitch from release to plate.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>pitch</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="PitchRelease
+
+
+  
+      dataclass
+   (pitchphys.core.pitch.PitchRelease)" href="#pitchphys.PitchRelease">PitchRelease</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Initial conditions.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>env</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="Environment
+
+
+  
+      dataclass
+   (pitchphys.core.environment.Environment)" href="#pitchphys.Environment">Environment</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Atmospheric environment (defaults to sea level).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ball</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="Baseball
+
+
+  
+      dataclass
+   (pitchphys.core.ball.Baseball)" href="#pitchphys.Baseball">Baseball</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Baseball physical properties (defaults to standard).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>model</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="AeroModel (pitchphys.aero.base.AeroModel)" href="#pitchphys.aero.AeroModel">AeroModel</a> | <span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Either a string name (<code>"magnus"</code>, <code>"lyu"</code>, <code>"simple"</code>,
+<code>"nathan"</code>, <code>"constant"</code>) or an AeroModel instance.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;magnus&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>forces</code>
+            </td>
+            <td>
+                  <code><span title="collections.abc.Sequence">Sequence</span>[<span title="str">str</span>] | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Force names to include (e.g. <code>["gravity", "drag", "magnus"]</code>).
+Defaults to all three. An empty list is allowed (free flight).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>plate_distance_m</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Y-coordinate where the integration terminates.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="pitchphys.constants.DEFAULT_PLATE_DISTANCE_M">DEFAULT_PLATE_DISTANCE_M</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>method</code>
+            </td>
+            <td>
+                  <code><span title="typing.Literal">Literal</span>[&#39;RK45&#39;, &#39;DOP853&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>"RK45"</code> (default) or <code>"DOP853"</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;RK45&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>rtol</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Solver relative tolerance.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1e-08</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>atol</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Solver absolute tolerance.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1e-10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_t</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum integration time in seconds.</p>
+              </div>
+            </td>
+            <td>
+                  <code>2.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>spin_decay_tau_s</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Exponential time constant for spin decay,
+<code>omega(t) = omega_0 * exp(-t / tau)</code>. Default <code>1.5 s</code> is an
+Adair-baseline value that gives ~23 % decay over a 0.4 s flight.
+Pass <code>None</code> to disable decay (omega stays constant; matches
+SPEC §8.1 strict reading and Nathan 2008's fit assumption).</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.5</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>_baselines</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Internal. If True and <code>"magnus"</code> is in <code>forces</code>, also
+simulate a gravity+drag baseline for Magnus-break diagnostics.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="TrajectoryResult
+
+
+  
+      dataclass
+   (pitchphys.core.trajectory.TrajectoryResult)" href="#pitchphys.TrajectoryResult">TrajectoryResult</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>TrajectoryResult</code> with arrays sampled at the integrator's accepted</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="TrajectoryResult
+
+
+  
+      dataclass
+   (pitchphys.core.trajectory.TrajectoryResult)" href="#pitchphys.TrajectoryResult">TrajectoryResult</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>timesteps and break-metric properties available.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.simulate.simulate_many" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">simulate_many</span>
+
+
+<a href="#pitchphys.simulate.simulate_many" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">simulate_many</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Run :func:<code>simulate</code> over a sequence of pitches (sequential in v0.1).</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.simulate_many" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">simulate_many</span>
+
+
+<a href="#pitchphys.simulate_many" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">simulate_many</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Run :func:<code>simulate</code> over a sequence of pitches (sequential in v0.1).</p>
+
+
+    </div>
+
+</div><h2 id="data-models">Data models<a class="headerlink" href="#data-models" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.PitchRelease" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">PitchRelease</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.PitchRelease" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">PitchRelease</span><span class="p">(</span><span class="n">speed_m_s</span><span class="p">,</span> <span class="n">launch_angle_deg</span><span class="p">,</span> <span class="n">horizontal_angle_deg</span><span class="p">,</span> <span class="n">release_pos_m</span><span class="p">,</span> <span class="n">spin_rate_rad_s</span><span class="p">,</span> <span class="n">spin_axis</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="nb">dict</span><span class="p">())</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Release-time state of a pitched ball.</p>
+<p>Internally everything is SI: meters, seconds, kilograms, radians. Use
+:meth:<code>from_mph_rpm_axis</code> to construct from baseball-friendly units.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.PitchRelease.from_mph_rpm_axis" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">from_mph_rpm_axis</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#pitchphys.PitchRelease.from_mph_rpm_axis" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_mph_rpm_axis</span><span class="p">(</span><span class="n">speed_mph</span><span class="p">,</span> <span class="n">spin_rpm</span><span class="p">,</span> <span class="n">tilt_clock</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">release_height_ft</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">release_side_ft</span><span class="o">=-</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">extension_ft</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">launch_angle_deg</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">horizontal_angle_deg</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">throwing_hand</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Construct a PitchRelease from baseball-friendly units.</p>
+<p><code>tilt_clock</code> is the clock-face tilt of the active spin axis viewed
+from behind home plate (catcher view). See :mod:<code>pitchphys.coordinates</code>
+for the convention. 12:00 = pure backspin axis, 6:00 = pure topspin,
+etc.</p>
+<p>The release position is at world <code>y = 0</code>; the plate sits ahead at
+<code>y = DEFAULT_PLATE_DISTANCE_M</code> (55 ft). <code>extension_ft</code> is stored as
+metadata in v0.1 but does not shift the release point.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>speed_mph</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pitch release speed.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>spin_rpm</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total spin rate (active + gyro).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>tilt_clock</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Active-spin clock tilt in hours, 0..12.</p>
+              </div>
+            </td>
+            <td>
+                  <code>12.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>active_spin_fraction</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fraction of spin perpendicular to velocity
+(the part that produces Magnus break). 0 = pure gyro, 1 = pure
+active.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.95</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>release_height_ft</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Height of release above home plate (z, ft).</p>
+              </div>
+            </td>
+            <td>
+                  <code>6.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>release_side_ft</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Lateral release offset (x, ft). Negative = catcher's
+left, which is the typical RHP release side.</p>
+              </div>
+            </td>
+            <td>
+                  <code>-1.5</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>extension_ft</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pitcher extension off the rubber (informational).</p>
+              </div>
+            </td>
+            <td>
+                  <code>6.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>launch_angle_deg</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Angle of velocity above horizontal at release.</p>
+              </div>
+            </td>
+            <td>
+                  <code>-1.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>horizontal_angle_deg</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Yaw of velocity around vertical (positive
+toward +x).</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>throwing_hand</code>
+            </td>
+            <td>
+                  <code><span title="typing.Literal">Literal</span>[&#39;R&#39;, &#39;L&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>"R"</code> or <code>"L"</code>; passed to :func:<code>clock_tilt_to_axis</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;R&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.PitchRelease.initial_velocity" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">initial_velocity</span>
+
+
+<a href="#pitchphys.PitchRelease.initial_velocity" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">initial_velocity</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Initial velocity 3-vector in world frame (m/s).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.PitchRelease.omega_vec" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">omega_vec</span>
+
+
+<a href="#pitchphys.PitchRelease.omega_vec" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">omega_vec</span><span class="p">(</span><span class="n">v_hat</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Angular velocity 3-vector in world frame (rad/s).</p>
+<p>If <code>v_hat</code> is given, the omega vector is reconstructed from the
+active axis + active_spin_fraction so the perp/parallel decomposition
+matches the requested velocity direction. Otherwise we use the stored
+<code>spin_axis</code> scaled by <code>spin_rate_rad_s</code>.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.Baseball" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">Baseball</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.Baseball" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">Baseball</span><span class="p">(</span><span class="n">mass_kg</span><span class="o">=</span><span class="n">BASEBALL_MASS_KG</span><span class="p">,</span> <span class="n">radius_m</span><span class="o">=</span><span class="n">BASEBALL_RADIUS_M</span><span class="p">,</span> <span class="n">seam_height_m</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>A point-mass baseball.</p>
+<p>Defaults are MLB rule midpoints (mass 5.0-5.25 oz, circumference
+9.0-9.25 in). Override for different ball lots, training balls, etc.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pitchphys.Baseball.area_m2" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">area_m2</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#pitchphys.Baseball.area_m2" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">area_m2</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Cross-sectional area used in drag/lift formulas.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.Environment" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">Environment</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.Environment" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">Environment</span><span class="p">(</span><span class="n">air_density_kg_m3</span><span class="o">=</span><span class="n">AIR_DENSITY_SEA_LEVEL</span><span class="p">,</span> <span class="n">dynamic_viscosity_pa_s</span><span class="o">=</span><span class="n">DYNAMIC_VISCOSITY_SEA_LEVEL</span><span class="p">,</span> <span class="n">gravity_m_s2</span><span class="o">=</span><span class="n">G_M_S2</span><span class="p">,</span> <span class="n">wind_m_s</span><span class="o">=</span><span class="n">_zero_wind</span><span class="p">())</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Air properties, gravity, and wind.</p>
+<p>Wind is a 3-vector in world frame (m/s). Drag uses <code>v_rel = v - wind</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.Environment.sea_level" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sea_level</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#pitchphys.Environment.sea_level" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">sea_level</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Standard sea-level air at 15 deg C.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.Environment.coors_field" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">coors_field</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#pitchphys.Environment.coors_field" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">coors_field</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Approximate Denver / Coors Field air density (~5,200 ft elevation).</p>
+<p>The 1.00 kg/m^3 value is approximate; real conditions vary with
+temperature and humidity. Use :meth:<code>from_weather</code> for explicit
+sensitivity studies.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.Environment.from_weather" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">from_weather</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#pitchphys.Environment.from_weather" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_weather</span><span class="p">(</span><span class="n">temp_c</span><span class="p">,</span> <span class="n">pressure_pa</span><span class="p">,</span> <span class="n">humidity</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Air properties from temperature, pressure, and relative humidity.</p>
+<p>Uses the ideal-gas law with the Tetens equation for water-vapor
+saturation pressure and a humid-air partial-pressure mixture. Dynamic
+viscosity is computed via Sutherland's law.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>temp_c</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Air temperature in degrees Celsius.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>pressure_pa</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total atmospheric pressure in Pa
+(sea-level standard ≈ 101325).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>humidity</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Relative humidity in <code>[0, 1]</code>. <code>0</code> for dry air.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="Environment
+
+
+  
+      dataclass
+   (pitchphys.core.environment.Environment)" href="#pitchphys.Environment">Environment</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>Environment</code> with computed <code>air_density_kg_m3</code> and</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="Environment
+
+
+  
+      dataclass
+   (pitchphys.core.environment.Environment)" href="#pitchphys.Environment">Environment</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>dynamic_viscosity_pa_s</code>. <code>gravity_m_s2</code> and <code>wind_m_s</code></p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="Environment
+
+
+  
+      dataclass
+   (pitchphys.core.environment.Environment)" href="#pitchphys.Environment">Environment</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>keep their defaults.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Humid air is <em>less</em> dense than dry air at the same pressure
+because water vapor (M ≈ 18 g/mol) is lighter than the
+nitrogen/oxygen mix (M ≈ 29 g/mol). At 30 °C, 100 % RH,
+sea-level pressure, this is ~1 % less dense than dry air.</p>
+</details>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.TrajectoryResult" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">TrajectoryResult</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.TrajectoryResult" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">TrajectoryResult</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">acceleration</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">reynolds_number</span><span class="p">,</span> <span class="n">spin_factor</span><span class="p">,</span> <span class="n">cd</span><span class="p">,</span> <span class="n">cl</span><span class="p">,</span> <span class="n">plate_distance_m</span><span class="p">,</span> <span class="n">ball</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">forces_used</span><span class="p">,</span> <span class="n">grav_drag_baseline</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="nb">dict</span><span class="p">())</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Sampled trajectory + per-step diagnostics.</p>
+<p>Arrays are indexed along axis 0 by accepted-integrator timesteps. Forces
+are stored per name in the <code>forces</code> dict (each value shape <code>(N, 3)</code>).</p>
+<p>Break metrics rely on baseline trajectories simulated with subsets of the
+forces: <code>gravity_only_baseline</code> (forces=["gravity"]) drives induced
+vertical break; <code>grav_drag_baseline</code> (forces=["gravity","drag"]) drives
+Magnus break.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pitchphys.TrajectoryResult.total_drop_in" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">total_drop_in</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#pitchphys.TrajectoryResult.total_drop_in" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">total_drop_in</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Inches the ball ended below the release height (positive = below).</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pitchphys.TrajectoryResult.horizontal_break_in" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">horizontal_break_in</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#pitchphys.TrajectoryResult.horizontal_break_in" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">horizontal_break_in</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Lateral deviation from a straight-line projection of the release velocity.</p>
+<p>Positive = catcher's right.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pitchphys.TrajectoryResult.induced_vertical_break_in" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">induced_vertical_break_in</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#pitchphys.TrajectoryResult.induced_vertical_break_in" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">induced_vertical_break_in</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Vertical movement induced by aerodynamic forces (Statcast §4.1).</p>
+<p>Defined as the difference in <code>z</code> between the actual pitch and a
+no-force projectile with the same release velocity, evaluated at the
+actual pitch's flight time:</p>
+<div class="highlight"><pre><span></span><code>z_no_force(t) = z0 + vz0 * t - 0.5 * g * t**2
+</code></pre></div>
+<p>Positive ⇒ the ball ended above the gravity-only path (the pitch
+"rises" relative to a spinless ball). Negative ⇒ extra drop. For a
+pure-gyro pitch with no Magnus contribution to z, IVB ≈ 0 by
+construction.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pitchphys.TrajectoryResult.magnus_break_x_in" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">magnus_break_x_in</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#pitchphys.TrajectoryResult.magnus_break_x_in" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">magnus_break_x_in</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>X component of break vs. a gravity+drag baseline.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="pitchphys.TrajectoryResult.non_magnus_break_in" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">non_magnus_break_in</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#pitchphys.TrajectoryResult.non_magnus_break_in" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">non_magnus_break_in</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Reserved for v0.3 seam-shifted-wake models. Always 0.0 in v0.1.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.TrajectoryResult.plate_location" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">plate_location</span>
+
+
+<a href="#pitchphys.TrajectoryResult.plate_location" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">plate_location</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p><code>(plate_x_ft, plate_z_ft)</code> at the moment of plate crossing.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="pitchphys.TrajectoryResult.break_metrics" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">break_metrics</span>
+
+
+<a href="#pitchphys.TrajectoryResult.break_metrics" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">break_metrics</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return all break metrics as a dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="aerodynamic-models">Aerodynamic models<a class="headerlink" href="#aerodynamic-models" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="pitchphys.aero"></a>
+    <div class="doc doc-contents first">
+
+        <p>Aerodynamic coefficient models.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.aero.AeroModel" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">AeroModel</span>
+
+
+<a href="#pitchphys.aero.AeroModel" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+        <p>Pluggable drag/lift coefficient provider.</p>
+<p>Implementations may use any subset of <code>Re</code>, <code>S</code>, and <code>ctx</code> keys
+they care about. <code>non_magnus_force</code> returns a 3-vector (N) for any
+extra force outside gravity/drag/Magnus; v0.1 ships zeros.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.aero.LyuAeroModel" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">LyuAeroModel</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.aero.LyuAeroModel" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">LyuAeroModel</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Lyu 2022 wind-tunnel <code>C_D(Re, S)</code> and <code>C_L(S)</code> (seam-averaged).</p>
+<p>Default for <code>model="magnus"</code>. See module docstring for sourcing.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.aero.NathanLiftModel" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">NathanLiftModel</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.aero.NathanLiftModel" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">NathanLiftModel</span><span class="p">(</span><span class="n">cd_value</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Lift model from Nathan 2008 — the Sawicki, Hubbard, Stronge (2003) bilinear.</p>
+<p>Implements the Sawicki-Hubbard-Stronge (SHS) bilinear <code>C_L(S)</code>:</p>
+<div class="highlight"><pre><span></span><code>C_L = 1.5 * S            for S &lt;  0.1
+C_L = 0.09 + 0.6 * S     for S &gt;= 0.1
+</code></pre></div>
+<p>where <code>S = R * |omega_perp| / |v_rel|</code> is the dimensionless spin factor.
+The two pieces agree at <code>S = 0.1</code> (both give <code>C_L = 0.15</code>), so the
+function is continuous.</p>
+<p>Nathan's 2008 motion-capture experiment (Am. J. Phys. 76:119-124)
+independently measured C_L over <code>v = 50-110 mph</code> and <code>S = 0.1-0.6</code>,
+finding "excellent agreement with the SHS parametrization for S &lt; 0.3."
+See <code>references/ajpfeb08.pdf</code> Sec. IV.A and Fig. 5; the explicit
+formula appears as Eq. (2) of Nathan's arXiv preprint physics/0605041.</p>
+<p>Drag is held at a constant <code>C_D = 0.35</code>. Nathan 2008 Fig. 4 shows
+the actual <code>C_D</code> has a weak speed dependence and considerable
+scatter; for a Re- and spin-dependent drag use <code>LyuAeroModel</code>.</p>
+<p>History: v0.1 of this package implemented <code>C_L = 1.5*S/(0.4 + 2.32*S)</code>
+in this class — that rational fit was misattributed to Nathan 2008 and
+has been replaced (v0.1.5) with the actual SHS bilinear.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.aero.SimpleMagnusModel" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SimpleMagnusModel</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.aero.SimpleMagnusModel" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SimpleMagnusModel</span><span class="p">(</span><span class="n">cd_value</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">cl_max</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Simple linear-in-spin-factor lift model: <code>Cl = min(a * S, cl_max)</code>.</p>
+<p>Default for <code>model="magnus"</code>. Transparent and pedagogically clear; not
+a precise empirical fit.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.aero.ConstantAeroModel" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">ConstantAeroModel</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.aero.ConstantAeroModel" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">ConstantAeroModel</span><span class="p">(</span><span class="n">cd_value</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">cl_value</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Constant drag and lift coefficients. Useful for analytic tests.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="pitchphys.aero.UserDefinedAeroModel" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">UserDefinedAeroModel</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#pitchphys.aero.UserDefinedAeroModel" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">UserDefinedAeroModel</span><span class="p">(</span><span class="n">cd_fn</span><span class="p">,</span> <span class="n">cl_fn</span><span class="p">,</span> <span class="n">force_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Wrap user-supplied callables as an AeroModel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="coordinates">Coordinates<a class="headerlink" href="#coordinates" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="pitchphys.coordinates"></a>
+    <div class="doc doc-contents first">
+
+        <p>Coordinate system and spin-axis convention.</p>
+<p>This module is the <strong>single source of truth</strong> for how clock-face spin tilts
+map to 3D spin-axis vectors. Every other module that needs to interpret a
+spin axis should call into this module rather than re-deriving the rotation.</p>
+<p>World axes (right-handed):
+    x = horizontal, positive to catcher's right
+    y = forward, positive from release toward home plate
+    z = vertical, positive up</p>
+<p>Spin tilt is described as a clock face viewed from behind home plate looking
+toward the pitcher (catcher view). For a right-handed pitcher (RHP):</p>
+<div class="highlight"><pre><span></span><code>    12 (backspin)
+     |
+</code></pre></div>
+<p>9 ----+---- 3
+         |
+         6 (topspin)</p>
+<div class="highlight"><pre><span></span><code>12:00 -&gt; axis = +x  (pure backspin -&gt; +z Magnus break, &quot;lift&quot;)
+ 3:00 -&gt; axis = -z  (sidespin     -&gt; +x Magnus break, catcher&#39;s right)
+ 6:00 -&gt; axis = -x  (pure topspin -&gt; -z Magnus break, &quot;drop&quot;)
+ 9:00 -&gt; axis = +z  (sidespin     -&gt; -x Magnus break, catcher&#39;s left)
+</code></pre></div>
+<p>The mapping of tilt T (in clock hours) to the 3D axis is a planar rotation
+in the catcher-view (x, z) plane:</p>
+<div class="highlight"><pre><span></span><code>angle_rad = -pi * T / 6           # measured clockwise from 12:00
+axis      = (cos(angle_rad), 0, sin(angle_rad))
+</code></pre></div>
+<p>For an LHP, the resulting axis is mirrored across the 12-6 axis (x -&gt; -x).</p>
+<p>Magnus force is always proportional to <code>omega x v_hat</code>, so under v_hat = +y
+the break direction equals the clock-tilt direction itself: 12:00 break = up,
+6:00 break = down, 3:00 break = catcher's right, 9:00 break = catcher's left.
+This is intentional (the convention is internally consistent) and is the
+mental model users should keep.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="pitchphys.coordinates.STRIKE_ZONE_TOP_FT" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">STRIKE_ZONE_TOP_FT</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#pitchphys.coordinates.STRIKE_ZONE_TOP_FT" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">STRIKE_ZONE_TOP_FT</span> <span class="o">=</span> <span class="mf">3.5</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="pitchphys.coordinates.STRIKE_ZONE_BOTTOM_FT" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">STRIKE_ZONE_BOTTOM_FT</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#pitchphys.coordinates.STRIKE_ZONE_BOTTOM_FT" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">STRIKE_ZONE_BOTTOM_FT</span> <span class="o">=</span> <span class="mf">1.5</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="pitchphys.coordinates.STRIKE_ZONE_HALF_WIDTH_FT" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">STRIKE_ZONE_HALF_WIDTH_FT</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#pitchphys.coordinates.STRIKE_ZONE_HALF_WIDTH_FT" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">STRIKE_ZONE_HALF_WIDTH_FT</span> <span class="o">=</span> <span class="mf">8.5</span> <span class="o">/</span> <span class="mf">12.0</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.coordinates.clock_tilt_to_axis" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">clock_tilt_to_axis</span>
+
+
+<a href="#pitchphys.coordinates.clock_tilt_to_axis" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">clock_tilt_to_axis</span><span class="p">(</span><span class="n">tilt_clock_hours</span><span class="p">,</span> <span class="n">throwing_hand</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Map a clock-face tilt to a 3D unit vector along the active spin axis.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tilt_clock_hours</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Clock tilt in hours, <code>0</code> &lt;= tilt &lt; <code>12</code>.
+Fractional values are allowed (e.g. <code>1.5</code> for 1:30). Out-of-range
+inputs are reduced modulo 12.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>throwing_hand</code>
+            </td>
+            <td>
+                  <code><span title="typing.Literal">Literal</span>[&#39;R&#39;, &#39;L&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>"R"</code> (default) or <code>"L"</code>. For <code>"L"</code> the resulting
+axis is mirrored across the 12-6 axis by flipping <code>x</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;R&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unit 3-vector <code>(x, y, z)</code> lying in the catcher-view (x, z) plane.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.coordinates.build_omega" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">build_omega</span>
+
+
+<a href="#pitchphys.coordinates.build_omega" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">build_omega</span><span class="p">(</span><span class="n">spin_rate_rad_s</span><span class="p">,</span> <span class="n">active_axis</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="p">,</span> <span class="n">v_hat</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Compose the full 3D angular velocity vector from an active axis + gyro mix.</p>
+<p><code>active_spin_fraction</code> is the share of the spin that is perpendicular to
+velocity (and therefore contributes to the Magnus force, SPEC §4.4). The
+remaining share is gyro spin aligned with velocity:</p>
+<div class="highlight"><pre><span></span><code>omega = spin_rate * (active_spin_fraction * active_axis_hat
+                     + gyro_fraction * v_hat)
+</code></pre></div>
+<p>where <code>gyro_fraction = sqrt(1 - active_spin_fraction^2)</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>spin_rate_rad_s</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Spin magnitude in rad/s.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>active_axis</code>
+            </td>
+            <td>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>3-vector along the active (perpendicular) spin axis.
+Need not be a unit vector; it will be normalized.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>active_spin_fraction</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>In <code>[0, 1]</code>. <code>1.0</code> means pure active spin.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>v_hat</code>
+            </td>
+            <td>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unit velocity direction at release.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>3-vector angular velocity in rad/s.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.coordinates.decompose_omega" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">decompose_omega</span>
+
+
+<a href="#pitchphys.coordinates.decompose_omega" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">decompose_omega</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">v_hat</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Split angular velocity into perpendicular and parallel components.</p>
+<p><code>omega = omega_perp + omega_par</code> where <code>omega_par</code> is along <code>v_hat</code>.
+Only <code>omega_perp</code> contributes to the Magnus force (SPEC §8.5).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>omega</code>
+            </td>
+            <td>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>3-vector angular velocity.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>v_hat</code>
+            </td>
+            <td>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unit velocity direction (need not be exactly unit; will be
+normalized).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="numpy.ndarray">ndarray</span>, <span title="numpy.ndarray">ndarray</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>(omega_perp, omega_par)</code>, both 3-vectors.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="units">Units<a class="headerlink" href="#units" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="pitchphys.units"></a>
+    <div class="doc doc-contents first">
+
+        <p>SI unit conversion helpers.</p>
+<p>The simulation core stores meters, seconds, kilograms, radians. These helpers
+convert at the user-facing boundary so mph/rpm/feet/inches never leak into
+force calculations.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.mph_to_mps" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">mph_to_mps</span>
+
+
+<a href="#pitchphys.units.mph_to_mps" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">mph_to_mps</span><span class="p">(</span><span class="n">mph</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.mps_to_mph" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">mps_to_mph</span>
+
+
+<a href="#pitchphys.units.mps_to_mph" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">mps_to_mph</span><span class="p">(</span><span class="n">mps</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.rpm_to_radps" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">rpm_to_radps</span>
+
+
+<a href="#pitchphys.units.rpm_to_radps" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">rpm_to_radps</span><span class="p">(</span><span class="n">rpm</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.radps_to_rpm" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">radps_to_rpm</span>
+
+
+<a href="#pitchphys.units.radps_to_rpm" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">radps_to_rpm</span><span class="p">(</span><span class="n">radps</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.ft_to_m" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">ft_to_m</span>
+
+
+<a href="#pitchphys.units.ft_to_m" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">ft_to_m</span><span class="p">(</span><span class="n">ft</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.m_to_ft" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">m_to_ft</span>
+
+
+<a href="#pitchphys.units.m_to_ft" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">m_to_ft</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.in_to_m" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">in_to_m</span>
+
+
+<a href="#pitchphys.units.in_to_m" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">in_to_m</span><span class="p">(</span><span class="n">inches</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.units.m_to_in" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">m_to_in</span>
+
+
+<a href="#pitchphys.units.m_to_in" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">m_to_in</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="visualization-2d-matplotlib">Visualization — 2D (Matplotlib)<a class="headerlink" href="#visualization-2d-matplotlib" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="pitchphys.viz.plot2d"></a>
+    <div class="doc doc-contents first">
+
+        <p>2D Matplotlib visualization helpers.</p>
+<p>Matplotlib is imported lazily inside each function so the core package can be
+used without the visualization extra installed.</p>
+<p>All views default to feet on both axes; pass <code>units="m"</code> to switch.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot2d.side_view" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">side_view</span>
+
+
+<a href="#pitchphys.viz.plot2d.side_view" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">side_view</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">show_release</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_plate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Plot the trajectory from the side (y vs. z).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot2d.catcher_view" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">catcher_view</span>
+
+
+<a href="#pitchphys.viz.plot2d.catcher_view" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">catcher_view</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">show_strike_zone</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_trajectory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Plot the trajectory as seen by the catcher (x vs. z).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot2d.top_view" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">top_view</span>
+
+
+<a href="#pitchphys.viz.plot2d.top_view" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">top_view</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Plot the trajectory from above (y vs. x).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot2d.compare_pitches" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">compare_pitches</span>
+
+
+<a href="#pitchphys.viz.plot2d.compare_pitches" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">compare_pitches</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;catcher&#39;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Overlay multiple trajectories on a shared view.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot2d.draw_force_arrows" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">draw_force_arrows</span>
+
+
+<a href="#pitchphys.viz.plot2d.draw_force_arrows" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">draw_force_arrows</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;side&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Annotate force vectors at selected times on an existing axis.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="visualization-3d-plotly">Visualization — 3D (Plotly)<a class="headerlink" href="#visualization-3d-plotly" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="pitchphys.viz.plot3d"></a>
+    <div class="doc doc-contents first">
+
+        <p>3D Plotly visualization helpers.</p>
+<p>Plotly is imported lazily inside each function so the core package can be
+used without the visualization extra installed. Use only
+<code>plotly.graph_objects</code> (no <code>plotly.express</code>) for explicit, composable
+trace control.</p>
+<p>World-frame axes (right-handed, per :mod:<code>pitchphys.coordinates</code>):</p>
+<div class="highlight"><pre><span></span><code>x = catcher&#39;s right
+y = forward toward home plate
+z = vertical, positive up
+</code></pre></div>
+<p>The default camera puts you behind and slightly above the catcher's left
+shoulder so vertical break is visible alongside the trajectory. Aspect
+mode is <code>"data"</code> to keep break-magnitude visually faithful.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot3d.trajectory_3d" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">trajectory_3d</span>
+
+
+<a href="#pitchphys.viz.plot3d.trajectory_3d" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">trajectory_3d</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">show_release</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_plate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_strike_zone</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">line_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Plot a single pitch trajectory in 3D.</p>
+<p>Returns the (possibly new) <code>plotly.graph_objects.Figure</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot3d.compare_pitches_3d" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">compare_pitches_3d</span>
+
+
+<a href="#pitchphys.viz.plot3d.compare_pitches_3d" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">compare_pitches_3d</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">show_strike_zone</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Overlay multiple trajectories in a single 3D scene.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot3d.add_spin_axis_arrow" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">add_spin_axis_arrow</span>
+
+
+<a href="#pitchphys.viz.plot3d.add_spin_axis_arrow" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">add_spin_axis_arrow</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length_ft</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#9467bd&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;spin axis&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Draw a 3D arrow along <code>pitch.spin_axis</code> at the given position.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.plot3d.add_force_vectors" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">add_force_vectors</span>
+
+
+<a href="#pitchphys.viz.plot3d.add_force_vectors" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">add_force_vectors</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">forces</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;gravity&#39;</span><span class="p">,</span> <span class="s1">&#39;drag&#39;</span><span class="p">,</span> <span class="s1">&#39;magnus&#39;</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Annotate the trajectory with force-vector cones at selected times.</p>
+<p><code>scale</code> is in meters per Newton (cone tip is <code>scale * |F|</code> meters
+from the ball position). Default 0.05 m/N gives ~5 cm per Newton, a
+reasonable visual size for the ~1 N forces typical at MLB speeds.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="animation">Animation<a class="headerlink" href="#animation" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="pitchphys.viz.animation"></a>
+    <div class="doc doc-contents first">
+
+        <p>Animated 3D trajectory using Plotly frames + slider/play.</p>
+<p>Plotly figure <code>frames</code> together with <code>updatemenus</code> and <code>sliders</code>
+provide a play/pause/scrub experience entirely in the browser. We don't
+require a server callback. Frame durations below ~30 ms tend to stutter
+in browsers; default is 30 fps which gives 33 ms per frame.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.animation.animate_pitch" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">animate_pitch</span>
+
+
+<a href="#pitchphys.viz.animation.animate_pitch" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">animate_pitch</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">show_trail</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_strike_zone</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">target_frames</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Build an animated 3D figure for a single pitch trajectory.</p>
+<p>The figure has a Play button and a frame slider. <code>target_frames</code>
+overrides the auto frame count derived from <code>fps * flight_time</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.viz.animation.animate_pitches" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">animate_pitches</span>
+
+
+<a href="#pitchphys.viz.animation.animate_pitches" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">animate_pitches</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;ft&#39;</span><span class="p">,</span> <span class="n">target_frames</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Animate multiple pitches synchronized on a shared time grid.</p>
+<p>Each pitch gets a colored ball + trail. All balls advance together over
+a common normalized time index; pitches with shorter flight reach the
+plate sooner and freeze at the plate position for remaining frames.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="pitch-presets">Pitch presets<a class="headerlink" href="#pitch-presets" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="pitchphys.presets"></a>
+    <div class="doc doc-contents first">
+
+        <p>Pedagogical pitch presets — see :mod:<code>pitchphys.presets.pitches</code>.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.presets.four_seam" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">four_seam</span>
+
+
+<a href="#pitchphys.presets.four_seam" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">four_seam</span><span class="p">(</span><span class="n">speed_mph</span><span class="o">=</span><span class="mf">95.0</span><span class="p">,</span> <span class="n">spin_rpm</span><span class="o">=</span><span class="mf">2400.0</span><span class="p">,</span> <span class="n">tilt_clock</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">throwing_hand</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>High-spin backspin fastball. Default Magnus break: straight up.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.presets.curveball" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">curveball</span>
+
+
+<a href="#pitchphys.presets.curveball" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">curveball</span><span class="p">(</span><span class="n">speed_mph</span><span class="o">=</span><span class="mf">80.0</span><span class="p">,</span> <span class="n">spin_rpm</span><span class="o">=</span><span class="mf">2700.0</span><span class="p">,</span> <span class="n">tilt_clock</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">throwing_hand</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Topspin curveball. Default Magnus break: straight down.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.presets.slider" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">slider</span>
+
+
+<a href="#pitchphys.presets.slider" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">slider</span><span class="p">(</span><span class="n">speed_mph</span><span class="o">=</span><span class="mf">85.0</span><span class="p">,</span> <span class="n">spin_rpm</span><span class="o">=</span><span class="mf">2500.0</span><span class="p">,</span> <span class="n">tilt_clock</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">throwing_hand</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Gyro-dominant slider. High raw spin, low total break.</p>
+<p>Demonstrates SPEC §4.4: spin rate alone does not predict movement.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.presets.sinker" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sinker</span>
+
+
+<a href="#pitchphys.presets.sinker" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">sinker</span><span class="p">(</span><span class="n">speed_mph</span><span class="o">=</span><span class="mf">92.0</span><span class="p">,</span> <span class="n">spin_rpm</span><span class="o">=</span><span class="mf">2200.0</span><span class="p">,</span> <span class="n">tilt_clock</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">throwing_hand</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Arm-side sinker for RHP. Default break: arm side + drop.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pitchphys.presets.changeup" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">changeup</span>
+
+
+<a href="#pitchphys.presets.changeup" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">changeup</span><span class="p">(</span><span class="n">speed_mph</span><span class="o">=</span><span class="mf">84.0</span><span class="p">,</span> <span class="n">spin_rpm</span><span class="o">=</span><span class="mf">1700.0</span><span class="p">,</span> <span class="n">tilt_clock</span><span class="o">=</span><span class="mf">7.0</span><span class="p">,</span> <span class="n">active_spin_fraction</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">throwing_hand</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Off-speed changeup. Lower spin, slight arm-side run + drop.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/jman4162/pitchphys" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/pitchphys/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "content.action.edit", "search.suggest", "search.highlight", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
